@@ -1,0 +1,33 @@
+.button {
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+}
+
+.primary {
+    background: white;
+    color: black;
+    transition: 0.2s outline;
+}
+
+.primary:focus {
+    outline: 2px solid aqua;
+}
+
+.primary:hover {
+    outline: 2px solid aqua;
+}
+
+.secondary {
+    background-color: black;
+    color: white;
+    transition: 0.3s opacity;
+}
+
+.secondary:hover {
+    opacity: 0.6;
+}
+
+.secondary:focus {
+    outline: none;
+}
