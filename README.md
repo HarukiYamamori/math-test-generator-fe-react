@@ -1,54 +1,94 @@
-# React + TypeScript + Vite
+# Math Test Generator FE - React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 概要
 
-Currently, two official plugins are available:
+このプロジェクトは、ReactとTypeScriptを使用して数学のテストを生成するためのWebアプリケーションです。<br>`better-react-mathjax`ライブラリを活用し、数式を美しくレンダリングすることができます。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 技術スタック
 
-## Expanding the ESLint configuration
+*   **フロントエンド**: React.js (Viteによる高速開発環境)
+*   **言語**: TypeScript
+*   **スタイル**: CSS Modules
+*   **数式表示**: `better-react-mathjax`
+*   **コード品質**: ESLint
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## セットアップ
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+プロジェクトをローカル環境でセットアップするには、以下の手順に従ってください。
+
+### 1. リポジトリのクローン
+
+```bash
+git clone https://github.com/HarukiYamamori/math-test-generator-fe-react.git
+cd math-test-generator-fe-react
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. 依存関係のインストール
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+プロジェクトの依存関係をインストールします。npmまたはYarnを使用できます。
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+**npmを使用する場合:**
+
+```bash
+npm install
 ```
+
+**Yarnを使用する場合:**
+
+```bash
+yarn install
+```
+
+### 3. 開発サーバーの起動
+
+開発サーバーを起動し、ブラウザでアプリケーションを確認します。
+
+**npmを使用する場合:**
+
+```bash
+npm run dev
+```
+
+**Yarnを使用する場合:**
+
+```bash
+yarn dev
+```
+
+通常、`http://localhost:5173` でアプリケーションにアクセスできます（ポート番号は異なる場合があります）。
+
+### 4. アプリケーションのビルド
+
+本番環境用にアプリケーションをビルドします。ビルドされたファイルは `dist` ディレクトリに出力されます。
+
+**npmを使用する場合:**
+
+```bash
+npm run build
+```
+
+**Yarnを使用する場合:**
+
+```bash
+yarn build
+```
+
+### 5. Lintの実行
+
+コードの品質チェックを行います。
+
+**npmを使用する場合:**
+
+```bash
+npm run lint
+```
+
+**Yarnを使用する場合:**
+
+```bash
+yarn lint
+```
+
+## 使い方
+1. [math-test-generator(BE)](https://github.com/HarukiYamamori/math-test-generator)を立ち上げる
+2. 入力欄にプロンプトを書いて、「問題生成」をクリック
