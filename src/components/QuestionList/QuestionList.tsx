@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect } from "react";
-import { MathJax } from "better-react-mathjax";
+import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import { Button } from "../Button/Button";
+import { PreviewModal } from "../Modal/PreviewMordal";
 import type { Question } from "../../types/Question";
 import styles from "./QuestionList.module.css"
 
@@ -9,8 +10,8 @@ function QuestionList() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [mathJaxLoading, setMathJaxLoading] = useState<boolean>(false);
-  const questionsContainerRef = useRef<HTMLDivElement>(null);
+  const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(null);
+  
 
   const handleSubmit = () => {
     if (!prompt) {
@@ -39,42 +40,6 @@ function QuestionList() {
         setLoading(false);
       });
   };
-
-  // useEffect(() => {
-  //   const script = document.createElement("script");
-  //   script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
-  //   script.async = true;
-  //   script.onload = () => {
-  //     console.log("MathJaxがロードされました！");
-  //   };
-  //   document.head.appendChild(script);
-  
-  //   return () => {
-  //     document.head.removeChild(script);
-  //   };
-  // }, []);
-  
-
-  // questionsが更新されたときにMathJaxを再描画
-  // useEffect(() => {
-  //   if (window.MathJax && questions.length > 0) { // ref.current のチェックは不要に
-  //     setMathJaxLoading(true);
-  //     const timer = setTimeout(() => {
-  //       // window.MathJax.typesetClear(); // この行を削除またはコメントアウト
-  //       window.MathJax.typesetPromise([document.body]) // document.body を対象にすることで、DOM全体を確実にスキャンさせる
-  //         .then(() => {
-  //           console.log("MathJax render complete");
-  //           setMathJaxLoading(false);
-  //         })
-  //         .catch((err: any) => {
-  //           console.error("MathJax エラー:", err);
-  //           setMathJaxLoading(false);
-  //         });
-  //     }, 50);
-
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [questions]);
 
   return (
     <div className={styles.container}>
@@ -106,37 +71,23 @@ function QuestionList() {
 
   
         {questions.length > 0 && (
-            <>
-                {mathJaxLoading && <p className={styles.loading}>数式をレンダリング中です...</p>}
-                <div ref={questionsContainerRef}>
-                    {questions.map((q, index) => (
-                        <div key={index} className={styles.questionCard}>
-                          <h3>問題:</h3>
-                          <MathJax>
-                          <div
-                            className={styles.mathContent}
-                            dangerouslySetInnerHTML={{ __html: q.problem }}
-                          />
-                          </MathJax>
-                          <h4>答え:</h4>
-                          <MathJax>
-                          <div
-                            className={styles.mathContent}
-                            dangerouslySetInnerHTML={{ __html: q.answer }}
-                          />
-                          </MathJax>
-                          <h4>解説:</h4>
-                          <MathJax>
-                          <div
-                            className={styles.mathContent}
-                            dangerouslySetInnerHTML={{ __html: q.explanation }}
-                          />
-                          </MathJax>
-                        </div>
-                    ))}
-                </div>
-            </>
+          <div className={styles.previewButtons}>
+            {questions.map((q, index) => (
+              <Button key={index} onClick={() => setSelectedQuestion(q)}>
+                {`問題${index + 1} プレビュー`}
+              </Button>
+            ))}
+          </div>
         )}
+
+        <AnimatePresence>
+          {selectedQuestion && (
+            <PreviewModal
+              question={selectedQuestion}
+              onClose={() => setSelectedQuestion(null)}
+            />
+          )}
+        </AnimatePresence>
     </div>
   );
 }
