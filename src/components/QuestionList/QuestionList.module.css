@@ -2,6 +2,7 @@
     padding: 20px;
     max-width: 700px;
     margin: 0 auto;
+    color: white;
 }
 
 .formArea {
@@ -14,7 +15,7 @@
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 6px;
-    resize: vertical;
+    resize: none;
 }
 
 .loading {
@@ -34,5 +35,14 @@
     color: #d32f2f;
     margin-top: 8px;
     font-size: 0.9rem;
+}
+
+@media (prefers-color-scheme: light) {
+    .container {
+        padding: 20px;
+        max-width: 700px;
+        margin: 0 auto;
+        color: black;
+    }
 }
   

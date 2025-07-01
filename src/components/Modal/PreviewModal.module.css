@@ -13,7 +13,7 @@
   }
   
 .modal {
-    background: gray;
+    background: rgb(95, 94, 94);
     padding: 30px;
     border-radius: 8px;
     max-width: 600px;
@@ -22,13 +22,18 @@
     overflow-y: auto;
 }
 
+.genreContainer {
+    text-align: left;
+}
+
 .questionContainer {
     margin-bottom: 20px;
+    color: white;
 }
 
 .tabArea {
     display: flex;
-    gap: 8px;
+    gap: 0px;
     margin-bottom: 16px;
 }
 
@@ -37,20 +42,39 @@
     border: none;
     background: rgb(189, 188, 188);
     cursor: pointer;
-    border-radius: 4px;
     font-weight: bold;
 }
 
-.tabButton:hover {
-    background: #e0e0e0;
+.tabButton {
+    position: relative;
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    font-weight: bold;
+    cursor: pointer;
+    color: #828080;
 }
 
-.active {
-    background: #333;
-    color: #fff;
+.tabButton::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: rgb(98, 222, 249);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.tabButton.active {
+    color: rgb(98, 222, 249);
+}
+
+.tabButton.active::after {
+    transform: scaleX(1);
 }
 
 .closeButton {
     margin-top: 20px;
 }
-  
