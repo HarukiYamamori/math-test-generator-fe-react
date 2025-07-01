@@ -8,7 +8,7 @@ type Props = {
   filename?: string;
 };
 
-export const PDFGenerator = ({ questions, filename = "math.pdf" }: Props) => {
+export const PDFGenerator = ({ questions }: Props) => {
   const getCurrentDateFormatted = () => {
     const today = new Date();
     const year = today.getFullYear();
