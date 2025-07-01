@@ -2,6 +2,7 @@
     cursor: pointer;
     border: none;
     font-size: 1rem;
+    border-radius: 8px;
 }
 
 .primary {
@@ -11,11 +12,11 @@
 }
 
 .primary:focus {
-    outline: 2px solid aqua;
+    outline: 2px solid rgb(98, 222, 249);
 }
 
 .primary:hover {
-    outline: 2px solid aqua;
+    outline: 2px solid rgb(98, 222, 249);
 }
 
 .secondary {
@@ -30,4 +31,12 @@
 
 .secondary:focus {
     outline: none;
+}
+
+@media (prefers-color-scheme: light) {
+    .primary {
+        background: rgb(71, 70, 70);
+        color: white;
+        transition: 0.2s outline;
+    }
 }

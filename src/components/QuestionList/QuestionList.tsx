@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import { PDFGenerator } from "../PDFGenerator/PDFGenerator";
 import { Button } from "../Button/Button";
 import { PreviewModal } from "../Modal/PreviewMordal";
 import type { Question } from "../../types/Question";
@@ -12,7 +13,6 @@ function QuestionList() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(null);
   
-
   const handleSubmit = () => {
     if (!prompt) {
         setErrorMessage("プロンプトを入力してください")
@@ -29,15 +29,25 @@ function QuestionList() {
       },
       body: JSON.stringify({ prompt: prompt }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 500) {
+          setErrorMessage("サーバーエラーが発生しました。もう一度お試しください。");
+          setLoading(false);
+          throw new Error("Server Error"); // Stop further processing
+        }
+        return response.json();
+      })
       .then((data) => {
         setQuestions(data.questions);
-        console.log("Received questions data:", data.questions); // この行を追加
+        console.log("Received questions data:", data.questions);
         setLoading(false);
       })
       .catch((error) => {
         console.error("データ取得エラー:", error);
         setLoading(false);
+        if (error.message !== "Server Error") { // Avoid showing generic error if it was a 500
+          setErrorMessage("問題の生成中にエラーが発生しました。");
+        }
       });
   };
 
@@ -71,13 +81,16 @@ function QuestionList() {
 
   
         {questions.length > 0 && (
-          <div className={styles.previewButtons}>
-            {questions.map((q, index) => (
-              <Button key={index} onClick={() => setSelectedQuestion(q)}>
-                {`問題${index + 1} プレビュー`}
-              </Button>
-            ))}
-          </div>
+          <>
+            <div className={styles.previewButtons}>
+              {questions.map((q, index) => (
+                <Button key={index} onClick={() => setSelectedQuestion(q)}>
+                  {`問題${index + 1}`}
+                </Button>
+              ))}
+            </div>
+            <PDFGenerator questions={questions} filename="math" />
+          </>
         )}
 
         <AnimatePresence>
